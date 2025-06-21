@@ -4,3 +4,34 @@ server:
 spring:
   application:
     name: munusync
+
+  # Database configuration (H2 in-memory for development)
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+
+  # JPA/Hibernate configuration
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop # Creates tables on startup, drops on shutdown
+    show-sql: true # Show SQL queries in console
+    properties:
+      hibernate:
+        format_sql: true # Format SQL queries for better readability
+
+  # H2 Console (for development/testing)
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+# Logging configuration
+logging:
+  level:
+    com.munusync.backend: INFO
+    org.springframework.web: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
