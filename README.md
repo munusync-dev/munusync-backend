@@ -8,24 +8,6 @@ A Spring Boot application for the Munusync project.
 - **Maven 3.6+** (or use the included Maven wrapper)
 - **IDE**: VS Code with Java extensions or IntelliJ IDEA
 
-## Project Structure
-
-```
-munusync-backend/
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── com/munusync/backend/
-│   │   │       └── MunusyncApplication.java
-│   │   └── resources/
-│   │       └── application.yaml
-│   └── test/
-├── pom.xml
-├── mvnw (Maven wrapper for Unix)
-├── mvnw.cmd (Maven wrapper for Windows)
-└── README.md
-```
-
 ## Running the Application
 
 ### 1. Terminal/Command Line
