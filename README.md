@@ -15,7 +15,6 @@ A Spring Boot application for the Munusync project.
 #### Unix/Linux/macOS
 
 ```bash
-# Using Maven wrapper (recommended)
 ./mvnw spring-boot:run
 
 ```
@@ -23,7 +22,6 @@ A Spring Boot application for the Munusync project.
 #### Windows
 
 ```cmd
-# Using Maven wrapper (recommended)
 mvnw.cmd spring-boot:run
 ```
 
@@ -103,40 +101,6 @@ Make sure you have the following VS Code extensions installed:
    mvnw.cmd spring-boot:run
    ```
 
-## Building the Application
-
-### Unix/Linux/macOS
-
-```bash
-# Clean and compile
-./mvnw clean compile
-
-# Run tests
-./mvnw test
-
-# Package (creates JAR file)
-./mvnw clean package
-
-# Run the JAR file
-java -jar target/backend-0.0.1-SNAPSHOT.jar
-```
-
-### Windows
-
-```cmd
-# Clean and compile
-mvnw.cmd clean compile
-
-# Run tests
-mvnw.cmd test
-
-# Package (creates JAR file)
-mvnw.cmd clean package
-
-# Run the JAR file
-java -jar target/backend-0.0.1-SNAPSHOT.jar
-```
-
 ## Troubleshooting
 
 ### Common Issues
@@ -210,7 +174,3 @@ Then attach your IDE debugger to port 5005.
 - **Spring Web** - For REST API endpoints
 - **Lombok** - For reducing boilerplate code
 - **Java 21** - Language version
-
-## License
-
-[Add your license information here]
