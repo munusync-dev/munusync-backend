@@ -16,14 +16,5 @@ public class MunusyncApplication {
         SpringApplication.run(MunusyncApplication.class, args);
     }
 
-    @Bean
-    public CommandLineRunner testDbConnection(DataSource dataSource) {
-        return args -> {
-            try (Connection conn = dataSource.getConnection()) {
-                System.out.println("✅ Database connected: " + conn.getMetaData().getURL());
-            } catch (Exception e) {
-                System.err.println("❌ Database connection failed: " + e.getMessage());
-            }
-        };
-    }
+   
 }
