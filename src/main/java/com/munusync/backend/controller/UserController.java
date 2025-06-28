@@ -1,6 +1,5 @@
 package com.munusync.backend.controller;
 
-import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,7 +61,7 @@ public class UserController {
 
     //Update
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable long id, @Valid @RequestBody User user){
+    public ResponseEntity<User> updateUser(@PathVariable long id, @Valid @RequestBody User user){
         
         if (id == user.getId()) {
            return userService.updateUser(id, user);
