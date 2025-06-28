@@ -1,9 +1,12 @@
 package com.munusync.backend.controller;
 
+import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,13 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.munusync.backend.entity.User;
 import com.munusync.backend.service.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
     
     @Autowired
     private UserService userService;
-
 
     // POST /users → create user.
     // GET /users → get all users.
@@ -32,30 +36,40 @@ public class UserController {
 
     //post
     @PostMapping
-    public void createUser( @RequestBody User user){
-        userService.createUser(user);
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user){
+        User savedUser = userService.createUser(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
 
     //get
     @GetMapping
-    public List<User> getUsers(){
-        return userService.getAllUsers();
+    public ResponseEntity<List<User>> getUsers(){
+        List<User> usersList = userService.getAllUsers();
+        if (usersList.size() == 0) {
+            return ResponseEntity.noContent().build() ;
+        }
+        return ResponseEntity.ok(usersList);
     }
 
     @GetMapping("/{id}")
-    public Optional<User> getUserById(@PathVariable long id){
-        return userService.getUserById(id);
+    public ResponseEntity<User> getUserById(@PathVariable long id){
+        Optional<User> user = userService.getUserById(id);
+        if(! user.isPresent()){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(user.get());
     }
 
     //Update
     @PutMapping("/{id}")
-    public void updateUser(@PathVariable long id, @RequestBody User user){
+    public ResponseEntity<?> updateUser(@PathVariable long id, @Valid @RequestBody User user){
+        
         if (id == user.getId()) {
-            userService.updateUser(id, user);
+           return userService.updateUser(id, user);
         }
+        return ResponseEntity.badRequest().build();
     }
     
-
     //Delete
     @DeleteMapping("/{id}")
     public void deleteUserById(@PathVariable long id){
