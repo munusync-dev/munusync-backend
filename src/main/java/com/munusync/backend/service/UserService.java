@@ -1,11 +1,11 @@
 package com.munusync.backend.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.munusync.backend.entity.User;
 import com.munusync.backend.repository.UserRepository;
@@ -16,44 +16,31 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    public Optional<User> getUserById(Long id){
-        return userRepository.findById(id);
+    public User getUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user not fount with id =" + id));
     }
 
-    public User createUser(User user){
-        return userRepository.save(user) ;
+    public User createUser(User user) {
+        return userRepository.save(user);
     }
 
-    public ResponseEntity<User> updateUser(Long id, User user){
+    public User updateUser(Long id, User user) {
 
-        Optional<User> optionalUser = getUserById(id);
+        User userToUpdate = getUserById(id);
+        userToUpdate.setName(user.getName());
+        userToUpdate.setEmail(user.getEmail());
 
-        if (optionalUser.isPresent() ) {
-            
-            User userRefrence = optionalUser.get();
-
-            userRefrence.setName(user.getName());
-            userRefrence.setEmail(user.getEmail());
-
-            User updateUser = userRepository.save(userRefrence);
-           
-           return ResponseEntity.ok(updateUser);
-        }
-        return ResponseEntity.notFound().build();
+        return userRepository.save(userToUpdate);
     }
 
-    public ResponseEntity<User> deleteUser(Long id){
-        if (this.getUserById(id).isPresent()) {
-            userRepository.deleteById(id);
-            return ResponseEntity.noContent().build();
-        }else{
-            return ResponseEntity.notFound().build();
-        }
+    public void deleteUser(Long id) {
+        User user = getUserById(id);
+        userRepository.delete(user);
     }
-    
+
 }
