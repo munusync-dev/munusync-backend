@@ -4,8 +4,8 @@ server:
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/munusync
-    username: munusync
-    password: "munusync"
+    username: postgres
+    password: "13Mhmd2004"
     driver-class-name: org.postgresql.Driver
 
   jpa:
