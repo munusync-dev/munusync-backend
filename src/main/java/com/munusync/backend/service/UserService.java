@@ -1,6 +1,7 @@
 package com.munusync.backend.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User getUserById(Long id) {
+    public User getUserById(UUID id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user not fount with id =" + id));
     }
@@ -29,7 +30,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User updateUser(Long id, User user) {
+    public User updateUser(UUID id, User user) {
 
         User userToUpdate = getUserById(id);
         userToUpdate.setName(user.getName());
@@ -38,7 +39,7 @@ public class UserService {
         return userRepository.save(userToUpdate);
     }
 
-    public void deleteUser(Long id) {
+    public void deleteUser(UUID id) {
         User user = getUserById(id);
         userRepository.delete(user);
     }

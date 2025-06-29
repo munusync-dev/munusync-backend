@@ -1,6 +1,7 @@
 package com.munusync.backend.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,7 +51,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable long id) {
+    public ResponseEntity<User> getUserById(@PathVariable UUID id) {
 
         User user = userService.getUserById(id);
 
@@ -59,7 +60,7 @@ public class UserController {
 
     // Update
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable long id, @Valid @RequestBody User user) {
+    public ResponseEntity<User> updateUser(@PathVariable UUID id, @Valid @RequestBody User user) {
 
         if (id == user.getId()) {
             return ResponseEntity.ok(userService.updateUser(id, user));
@@ -70,7 +71,7 @@ public class UserController {
 
     // Delete
     @DeleteMapping("/{id}")
-    public void deleteUserById(@PathVariable long id) {
+    public void deleteUserById(@PathVariable UUID id) {
         userService.deleteUser(id);
     }
 
