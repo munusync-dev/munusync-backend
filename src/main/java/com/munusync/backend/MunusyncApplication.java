@@ -15,6 +15,5 @@ public class MunusyncApplication {
     public static void main(String[] args) {
         SpringApplication.run(MunusyncApplication.class, args);
     }
-
-   
+    
 }
