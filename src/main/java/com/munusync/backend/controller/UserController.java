@@ -62,7 +62,7 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable UUID id, @Valid @RequestBody User user) {
 
-        if (id == user.getId()) {
+        if (id.equals(user.getId())) {
             return ResponseEntity.ok(userService.updateUser(id, user));
         }
 
