@@ -1,6 +1,5 @@
 package com.munusync.backend.entity;
 
-import java.rmi.server.UID;
 import java.util.UUID;
 
 import jakarta.persistence.*;
