@@ -1,6 +1,18 @@
 server:
-  port: 8080
+  port: 8080  
 
 spring:
   application:
     name: munusync
+  datasource:
+    url: jdbc:postgresql://localhost:5432/munusync
+    username: postgres
+    password: wakedz19
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update  # Automatically creates/updates tables
+    show-sql: true      # Shows SQL in logs for debugging
+    properties:
+      hibernate:
+        format_sql: true  # Formats SQL for better readability
