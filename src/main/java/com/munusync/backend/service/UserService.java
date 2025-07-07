@@ -1,5 +1,7 @@
 package com.munusync.backend.service;
 
+import com.munusync.backend.dto.request.UserRegistrationRequestDTO;
+import com.munusync.backend.dto.response.UserRegistrationResponseDTO;
 import com.munusync.backend.entity.User;
 import com.munusync.backend.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -22,14 +24,25 @@ public class UserService {
         return userRepository.findAll();
     }
     // read user by id.
-    //Optional used because a container object which may or may not contain a non-null value
-    public Optional<User> getUserById(Long id){
-        return userRepository.findById(id);
+    public User getUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User with ID " + id + " not found"));
     }
+
     //create a new user.
-    public User createUser(User user){
-        return userRepository.save(user);
+    public UserRegistrationResponseDTO createUser(UserRegistrationRequestDTO dto){
+        User user = User.builder()
+                .name(dto.getFirstName()+" "+dto.getLastName())
+                .email(dto.getEmail())
+                .build();
+        userRepository.save(user);
+        return UserRegistrationResponseDTO.builder()
+                .id(user.getId())
+                .userName(user.getName())
+                .message("User Created successfully\n")
+                .build();
     }
+
     // update an existing user.
     public Optional<User> updateUser(Long id, User user){
         Optional<User> exist = userRepository.findById(id);

@@ -1,5 +1,7 @@
 package com.munusync.backend.controller;
 
+import com.munusync.backend.dto.request.UserRegistrationRequestDTO;
+import com.munusync.backend.dto.response.UserRegistrationResponseDTO;
 import com.munusync.backend.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +19,11 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user){
+    public ResponseEntity<UserRegistrationResponseDTO> createUser(@RequestBody UserRegistrationRequestDTO user){
         return ResponseEntity.ok(service.createUser(user));
     }
+
+
 
     @GetMapping
     public  ResponseEntity<List<User>> getAllUsers(){
@@ -27,9 +31,10 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public  ResponseEntity<Optional<User>> getUserById(@PathVariable long id){
+    public  ResponseEntity<User> getUserById(@PathVariable long id){
         return ResponseEntity.ok((service.getUserById(id)));
     }
+
 
     @PutMapping("/{id}")
     public  ResponseEntity<Optional<User>> updateUser(@PathVariable long id, @RequestBody User user){
@@ -38,10 +43,7 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable long id) {
-        Optional<User> user = service.getUserById(id);
-        if (user.isEmpty()) {
-            return ResponseEntity.badRequest().body("User with ID " + id + " not found.");
-        }
+        service.getUserById(id);
         service.deleteUser(id);
         return ResponseEntity.ok("User deleted successfully.");
     }
