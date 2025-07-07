@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.munusync.backend.Repository.UserRepository;
@@ -23,8 +25,8 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<UserResponse> getAllusers() {
-        return userRepository.findAll().stream().map(UserMapper::toUserResponseDto).collect(Collectors.toList());
+    public Page<UserResponse> getAllusers(Pageable pageable) {
+        return userRepository.findAll(pageable).map(UserMapper::toUserResponseDto);
     }
 
     public Optional<UserResponse> getUserById(Long id) {

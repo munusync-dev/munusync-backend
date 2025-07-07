@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,8 +39,8 @@ public class UserController {
     }
 
     @GetMapping
-    public List<UserResponse> getAllUsers() {
-        return userService.getAllusers();
+    public Page<UserResponse> getAllUsers(Pageable pageable) {
+        return userService.getAllusers(pageable);
     }
 
     @GetMapping("/{id}")
