@@ -14,10 +14,5 @@ public class MunusyncApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(MunusyncApplication.class, args);
-    }
+    }}
 
-<<<<<<< HEAD
-=======
-   
->>>>>>> 85852505ceee28e61442811cd688f849a908978b
-}

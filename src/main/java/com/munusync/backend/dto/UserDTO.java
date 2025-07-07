@@ -1,27 +1,55 @@
 package com.munusync.backend.dto;
 
 public class UserDTO {
-    private String name;
-    private String email;
+    private final Long id;
+    private final String name;
+    private final String email;
 
-    public UserDTO() {}
-
-    public UserDTO(String name, String email) {
-        this.name = name;
-        this.email = email;
+    private UserDTO(Builder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.email = builder.email;
     }
 
-    // getters and setters
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private Long id;
+        private String name;
+        private String email;
+
+        public Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public UserDTO build() {
+            return new UserDTO(this);
+        }
+    }
+
+    // Getters only — immutable
+    public Long getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
-    public void setName(String name) {
-        this.name = name;
-    }
+
     public String getEmail() {
         return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
     }
 }

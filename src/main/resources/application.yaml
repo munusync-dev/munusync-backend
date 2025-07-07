@@ -1,19 +1,11 @@
 server:
-<<<<<<< HEAD
   port: 8000
-=======
-  port: 9000
 
->>>>>>> 85852505ceee28e61442811cd688f849a908978b
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/munusync
     username: munusync
-<<<<<<< HEAD
     password: "munusync"
-=======
-    password: munusyncpa55
->>>>>>> 85852505ceee28e61442811cd688f849a908978b
     driver-class-name: org.postgresql.Driver
 
   jpa:

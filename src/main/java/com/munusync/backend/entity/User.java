@@ -1,10 +1,9 @@
 package com.munusync.backend.entity;
 
 import jakarta.persistence.*;
-<<<<<<< HEAD
 
 @Entity
-@Table(name = "users") // ← rename the table to avoid conflict
+@Table(name = "users")
 public class User {
 
     @Id
@@ -14,47 +13,39 @@ public class User {
     private String name;
     private String email;
 
+    // No-arg constructor
     public User() {}
 
+    // All-args constructor
     public User(Long id, String name, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
     }
 
-    // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-=======
-import lombok.*;
-
-@Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-@Getter
-@Setter
-@Table(name="users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Column(nullable = false)
-    private String name;
-
-    @Column(nullable = false)
-    private String email;
-
-    @Override
-    public String toString() {
-        return "ID: " + id + ", Name: " + name + ", Email: " + email;
+    // Getters
+    public Long getId() {
+        return id;
     }
->>>>>>> 85852505ceee28e61442811cd688f849a908978b
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    // Setters if needed
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
