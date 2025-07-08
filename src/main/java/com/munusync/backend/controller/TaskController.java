@@ -6,6 +6,7 @@ import com.munusync.backend.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class TaskController {
         return ResponseEntity.ok(taskService.createTask(request));
     }
 
-    @GetMapping
+   @GetMapping("/all")
     public ResponseEntity<List<TaskResponse>> getAllTasks() {
         return ResponseEntity.ok(taskService.getAllTasks());
     }
@@ -41,5 +42,13 @@ public class TaskController {
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<TaskResponse>> getAllTasks(
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "5") int size
+    )   {
+    return ResponseEntity.ok(taskService.getTasksPaginated(page, size));
     }
 }
