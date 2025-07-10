@@ -52,4 +52,7 @@ public class UserService {
         userRepository.delete(user);
     }
 
+    public boolean isEmailInUse(String email) {
+        return userRepository.existByEmail(email);
+    }
 }

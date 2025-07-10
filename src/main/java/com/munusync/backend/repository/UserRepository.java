@@ -9,5 +9,5 @@ import com.munusync.backend.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID> {
-
+    boolean existByEmail(String email);
 }
