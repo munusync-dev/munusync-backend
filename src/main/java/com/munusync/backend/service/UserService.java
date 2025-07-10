@@ -41,6 +41,13 @@ public class UserService {
     public User updateUser(UUID id, User user) {
 
         User userToUpdate = getUserById(id);
+
+        if (!user.getEmail().equalsIgnoreCase(userToUpdate.getEmail())) {
+            if (userRepository.existsByEmail(user.getEmail())) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already exists");
+            }
+        }
+
         userToUpdate.setName(user.getName());
         userToUpdate.setEmail(user.getEmail());
 
