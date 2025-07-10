@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.munusync.backend.dto.request.createUserRequestDTO;
-import com.munusync.backend.dto.response.createUserResponseDTO;
+import com.munusync.backend.dto.request.CreateUserRequest;
+import com.munusync.backend.dto.response.CreateUserResponse;
 import com.munusync.backend.entity.User;
 import com.munusync.backend.service.UserService;
 
@@ -37,9 +37,9 @@ public class UserController {
 
     // post
     @PostMapping
-    public ResponseEntity<createUserResponseDTO> createUser(@Valid @RequestBody createUserRequestDTO user) {
+    public ResponseEntity<CreateUserResponse> createUser(@Valid @RequestBody CreateUserRequest user) {
 
-        createUserResponseDTO savedUser = userService.createUser(user);
+        CreateUserResponse savedUser = userService.createUser(user);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }

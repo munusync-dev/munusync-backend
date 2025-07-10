@@ -6,7 +6,7 @@ import lombok.*;
 
 @Builder
 @Getter
-public final class createUserResponseDTO {
+public final class CreateUserResponse {
     UUID id;
     String name;
     String email;

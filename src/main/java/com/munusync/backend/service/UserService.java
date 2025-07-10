@@ -8,8 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.munusync.backend.dto.request.createUserRequestDTO;
-import com.munusync.backend.dto.response.createUserResponseDTO;
+import com.munusync.backend.dto.request.CreateUserRequest;
+import com.munusync.backend.dto.response.CreateUserResponse;
 import com.munusync.backend.entity.User;
 import com.munusync.backend.repository.UserRepository;
 
@@ -28,7 +28,7 @@ public class UserService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user not fount with id =" + id));
     }
 
-    public createUserResponseDTO createUser(createUserRequestDTO user) {
+    public CreateUserResponse createUser(CreateUserRequest user) {
 
         User newUser = new User();
         newUser.setName(user.getName());
@@ -36,7 +36,7 @@ public class UserService {
 
         User savedUser = userRepository.save(newUser);
 
-        return createUserResponseDTO.builder().id(savedUser.getId()).name(user.getName()).email(user.getEmail())
+        return CreateUserResponse.builder().id(savedUser.getId()).name(user.getName()).email(user.getEmail())
                 .build();
     }
 
