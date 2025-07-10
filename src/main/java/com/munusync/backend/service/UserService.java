@@ -30,13 +30,11 @@ public class UserService {
 
     public CreateUserResponse createUser(CreateUserRequest user) {
 
-        User newUser = new User();
-        newUser.setName(user.getName());
-        newUser.setEmail(user.getEmail());
+        User newUser = User.builder().name(user.getName()).email(user.getEmail()).build();
 
-        User savedUser = userRepository.save(newUser);
+        User response = userRepository.save(newUser);
 
-        return CreateUserResponse.builder().id(savedUser.getId()).name(user.getName()).email(user.getEmail())
+        return CreateUserResponse.builder().id(response.getId()).name(user.getName()).email(user.getEmail())
                 .build();
     }
 
