@@ -4,11 +4,14 @@ import com.munusync.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import com.munusync.backend.dto.UserRequest;
+import com.munusync.backend.dto.UserResponse;
 
-@Service  // ← Makes this a Spring bean
+
+@Service  //Makes this a Spring bean
 public class UserService { 
 
-    @Autowired  // ← Injects the repository automatically
+    @Autowired  //Injects the repository automatically
     private UserRepository userRepository;
 
     public List<User> getAllUsers() {
@@ -31,4 +34,16 @@ public class UserService {
     public void deleteUser(Long id) {
         userRepository.deleteById(id);  // Deletes by ID
     }
+    public UserResponse registerUser(UserRequest userRequest) {
+    // Simulate a generated user ID
+    Long generatedUserId = 1L; 
+
+    return UserResponse.builder()
+        .userId(generatedUserId)
+        .username(userRequest.getUsername())
+        .email(userRequest.getEmail())
+        .message("User registered successfully")
+        .build();
+}
+
 }
