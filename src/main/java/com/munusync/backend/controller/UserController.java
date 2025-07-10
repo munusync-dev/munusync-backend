@@ -44,7 +44,6 @@ public class UserController {
         if (userService.isEmailInUse(user.getEmail())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User with this email aleady exist");
         }
-
         CreateUserResponse savedUser = userService.createUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
@@ -55,7 +54,7 @@ public class UserController {
         List<User> usersList = userService.getAllUsers();
         if (usersList.size() == 0) {
             return ResponseEntity.noContent().build();
-        
+        }
         return ResponseEntity.ok(usersList);
     }
 

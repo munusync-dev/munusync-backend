@@ -53,6 +53,6 @@ public class UserService {
     }
 
     public boolean isEmailInUse(String email) {
-        return userRepository.existByEmail(email);
+        return userRepository.existsByEmail(email);
     }
 }
