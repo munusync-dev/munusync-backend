@@ -1,5 +1,7 @@
 package com.munusync.backend.service;
 
+import com.munusync.backend.Dto.UserRequest;
+import com.munusync.backend.Dto.UserResponse;
 import com.munusync.backend.entity.User;
 import com.munusync.backend.repository.UserRepository;
 
@@ -24,20 +26,36 @@ public class UserService {
     public Optional<User> getUserById(Long id) {
         return userRepository.findById(id);
     }
-
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public UserResponse createUser(UserRequest userRequest) {
+        User user = new User();
+        user.setName(userRequest.getName());
+        user.setEmail(userRequest.getEmail());
+    
+        User savedUser = userRepository.save(user);
+    
+        return UserResponse.builder()
+                .name(savedUser.getName())
+                .email(savedUser.getEmail())
+                .build();
     }
+    
+    
 
-    public User updateUser(Long id, User userDetails) {
+    public UserResponse updateUser(Long id, UserRequest userRequest) {
         User existingUser = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
-
-        existingUser.setName(userDetails.getName());
-        existingUser.setEmail(userDetails.getEmail());
-
-        return userRepository.save(existingUser);
+            .orElseThrow(() -> new RuntimeException("User not found"));
+    
+        existingUser.setName(userRequest.getName());
+        existingUser.setEmail(userRequest.getEmail());
+    
+        User updatedUser = userRepository.save(existingUser);
+    
+        return UserResponse.builder()
+                .name(updatedUser.getName())
+                .email(updatedUser.getEmail())
+                .build();
     }
+    
 
     public void deleteUser(Long id) {
         if (!userRepository.existsById(id)) {

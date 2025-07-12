@@ -1,5 +1,7 @@
 package com.munusync.backend.controller;
 
+import com.munusync.backend.Dto.UserRequest;
+import com.munusync.backend.Dto.UserResponse;
 import com.munusync.backend.entity.User;
 import com.munusync.backend.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -19,10 +21,11 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        User createdUser = userService.createUser(user);
+    public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest userRequest) {
+        UserResponse createdUser = userService.createUser(userRequest);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
+    
 
     @GetMapping
     public List<User> getAllUsers() {
@@ -37,14 +40,15 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
+    public ResponseEntity<UserResponse> updateUser(@PathVariable Long id, @RequestBody UserRequest userRequest) {
         try {
-            User updatedUser = userService.updateUser(id, userDetails);
+            UserResponse updatedUser = userService.updateUser(id, userRequest);
             return new ResponseEntity<>(updatedUser, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable Long id) {
