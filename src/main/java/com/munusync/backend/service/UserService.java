@@ -32,6 +32,7 @@ public class UserService {
     public Optional<UserResponse> getUserById(Long id) {
         return userRepository.findById(id).map(UserMapper::toUserResponseDto);
     }
+    
 
     public UserResponse createUser(CreateUserRequest request) {
         User user = UserMapper.toUser(request);

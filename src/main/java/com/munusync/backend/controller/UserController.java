@@ -1,6 +1,5 @@
 package com.munusync.backend.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,17 +13,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.munusync.backend.dto.request.user.CreateUserRequest;
 import com.munusync.backend.dto.request.user.UpdateUserRequest;
 import com.munusync.backend.dto.response.user.UserResponse;
-import com.munusync.backend.entity.User;
 import com.munusync.backend.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/v1/users")
 public class UserController {
     private final UserService userService;
 
