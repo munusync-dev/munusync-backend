@@ -1,9 +1,8 @@
-package com.munusync.backend;
+package com.munusync.backend.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.*;
-
 
 @Entity
 @Getter
