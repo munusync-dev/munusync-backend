@@ -1,4 +1,4 @@
-package com.munusync.backend.Dto.Request;
+package com.munusync.backend.dto.request;
 
 import lombok.Data;
 import java.time.LocalDate;

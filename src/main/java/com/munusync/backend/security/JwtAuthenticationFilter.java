@@ -1,6 +1,5 @@
-package com.munusync.backend.Filter;
+package com.munusync.backend.security;
 
-import com.munusync.backend.Service.Implentation.JWTService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,7 +15,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private JWTService jwtService;
+    private final JWTTokenProvider jwtService;
 
     @Override
     protected void doFilterInternal(
@@ -40,5 +39,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         jwt = authHeader.substring(7);
         userEmail = jwtService.extractEmail(jwt);
+
+        if (userEmail != null && jwtService.validateToken(jwt)) {
+            // Get Authentication object from JWT
+            var authentication = jwtService.getAuthentication(jwt);
+
+            // Set authentication in security context
+            org.springframework.security.core.context.SecurityContextHolder.getContext()
+                    .setAuthentication(authentication);
+        }
+
+        filterChain.doFilter(request, response);
     }
 }

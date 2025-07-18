@@ -1,4 +1,4 @@
-package com.munusync.backend.Dto.Response;
+package com.munusync.backend.dto.response;
 
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +14,6 @@ public class AuthResponse {
     private String firstName;
     private String lastName;
 
-    //adding using claude
     private String token;
     private String message;
 }

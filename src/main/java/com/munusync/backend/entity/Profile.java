@@ -1,4 +1,4 @@
-package com.munusync.backend;
+package com.munusync.backend.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,7 +26,13 @@ public class Profile {
 
     private LocalDate dateOfBirth;
 
-    private LocalDateTime created_at;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)

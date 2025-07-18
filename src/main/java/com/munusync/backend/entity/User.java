@@ -1,11 +1,9 @@
-package com.munusync.backend;
+package com.munusync.backend.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 @Entity
 @Table(name = "users")
@@ -19,7 +17,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(nullable = false,unique = true)
     private String email; ;
@@ -33,5 +31,12 @@ public class User {
     private Profile profile;
 
     private LocalDateTime createdAt;
+
+    @Column(nullable = false)
+    private boolean enabled = true;
+
+    @Column(nullable = false)
+    private boolean locked = false;
+
 
 }

@@ -1,5 +1,5 @@
-package com.munusync.backend.Repository;
-import com.munusync.backend.Entities.*;
+package com.munusync.backend.repository;
+import com.munusync.backend.entity.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
