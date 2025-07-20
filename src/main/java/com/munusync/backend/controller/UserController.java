@@ -1,13 +1,17 @@
 package com.munusync.backend.controller;
 
+import com.munusync.backend.dto.request.UserRequest;
+import com.munusync.backend.dto.response.UserResponse;
 import com.munusync.backend.entity.User;
 import com.munusync.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;//for what?
+import org.springframework.web.bind.annotation.*;// do need it if you're using those annotations  like get and post
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -21,14 +25,17 @@ public class UserController {
     private UserService userService;
 
     //POST create user post
+    @PostMapping
     public void create(@RequestBody User user){
         userService.createUser(user);
     }
 
     //Get all users
-    public List getAllUsers(){
-        return userService.getAllUsers();
-    }
+//    @GetMapping
+//    public List<User> getAllUsers(){
+//        return userService.getAllUsers();
+//    }
+
 
     //Get user by id
     @GetMapping("/{id}")
@@ -62,4 +69,21 @@ public class UserController {
         //method is not void ts not enough to delete with no return
         return ResponseEntity.noContent().build();
 }
+
+    @PostMapping("/users")
+    public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest request) {
+        User user = userService.createUserFromDTO(request);
+        return new ResponseEntity<>(userService.toResponse(user), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/users")
+    public List<UserResponse> getAllUsers() {
+        return userService.getAllUsers().stream()
+                .map(userService::toResponse)
+                .collect(Collectors.toList());
+    }
+
+
+     //login
+    // registration
 }

@@ -20,6 +20,8 @@ public class User {
     private String name;
     private String email;
 
+    public User() {}  // Required by JPA and tools like Jackson
+
     public User(String email, String name) {
         this.email = email;
         this.name = name;

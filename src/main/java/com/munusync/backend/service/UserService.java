@@ -1,4 +1,6 @@
 package com.munusync.backend.service;
+import com.munusync.backend.dto.request.UserRequest;
+import com.munusync.backend.dto.response.UserResponse;
 import com.munusync.backend.entity.User;
 import com.munusync.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +58,26 @@ public class UserService {
         userRepository.deleteById(id);
 
     }
+
+    public User fromRequest(UserRequest dto) {
+        User user = new User();
+        user.setName(dto.getName());
+        user.setEmail(dto.getEmail());
+        return user;
+    }
+
+    public UserResponse toResponse(User user) {
+        return new UserResponse(user.getId(), user.getName(), user.getEmail());
+    }
+
+    public User createUserFromDTO(UserRequest dto) {
+        User user = new User();
+        user.setName(dto.getName());
+        user.setEmail(dto.getEmail());
+        return userRepository.save(user);
+    }
+
+
+    //verify method
 }
 
