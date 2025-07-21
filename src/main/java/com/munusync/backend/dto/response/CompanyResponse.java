@@ -1,23 +1,18 @@
-package com.munusync.backend.entity;
+package com.munusync.backend.dto.response;
 
 import com.munusync.backend.enums.CompanyStatus;
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
-@Table(name = "companies")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Company {
+public class CompanyResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -28,10 +23,8 @@ public class Company {
 
     private String website;
 
-    @ElementCollection
     private List<String> tags;
 
-    @Enumerated(EnumType.STRING)
     private CompanyStatus status;
 
     private LocalDateTime createdAt;

@@ -1,26 +1,25 @@
 package com.munusync.backend.entity;
 
+import com.munusync.backend.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "users")
+@Table(name = "roles")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, unique = true)
+    private UserRole name;
 
-    private String password;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id")
-    private Role role;
+    private String description;
 }
