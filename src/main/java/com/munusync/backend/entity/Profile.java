@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.time.*;
 
+
 @Entity
 @Getter
 @Setter
@@ -25,7 +26,13 @@ public class Profile {
 
     private LocalDate dateOfBirth;
 
-    private LocalDateTime created_at;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
