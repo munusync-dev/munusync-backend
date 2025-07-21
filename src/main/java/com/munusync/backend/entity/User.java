@@ -1,6 +1,5 @@
 package com.munusync.backend.entity;
 
-import java.rmi.server.UID;
 import java.util.UUID;
 
 import jakarta.persistence.*;
@@ -10,6 +9,7 @@ import lombok.*;
 @Table(name = "users")
 @Setter
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
@@ -21,6 +21,6 @@ public class User {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 }

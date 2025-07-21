@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.munusync.backend.dto.request.CreateUserRequest;
+import com.munusync.backend.dto.response.CreateUserResponse;
 import com.munusync.backend.entity.User;
 import com.munusync.backend.repository.UserRepository;
 
@@ -26,13 +28,26 @@ public class UserService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "user not fount with id =" + id));
     }
 
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public CreateUserResponse createUser(CreateUserRequest user) {
+
+        User newUser = User.builder().name(user.getName()).email(user.getEmail()).build();
+
+        User response = userRepository.save(newUser);
+
+        return CreateUserResponse.builder().id(response.getId()).name(user.getName()).email(user.getEmail())
+                .build();
     }
 
     public User updateUser(UUID id, User user) {
 
         User userToUpdate = getUserById(id);
+
+        if (!user.getEmail().equalsIgnoreCase(userToUpdate.getEmail())) {
+            if (userRepository.existsByEmail(user.getEmail())) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email already exists");
+            }
+        }
+
         userToUpdate.setName(user.getName());
         userToUpdate.setEmail(user.getEmail());
 
@@ -44,4 +59,7 @@ public class UserService {
         userRepository.delete(user);
     }
 
+    public boolean isEmailInUse(String email) {
+        return userRepository.existsByEmail(email);
+    }
 }

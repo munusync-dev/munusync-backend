@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
+import com.munusync.backend.dto.request.CreateUserRequest;
+import com.munusync.backend.dto.response.CreateUserResponse;
 import com.munusync.backend.entity.User;
 import com.munusync.backend.service.UserService;
 
@@ -35,8 +38,12 @@ public class UserController {
 
     // post
     @PostMapping
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-        User savedUser = userService.createUser(user);
+    public ResponseEntity<CreateUserResponse> createUser(@Valid @RequestBody CreateUserRequest user) {
+
+        if (userService.isEmailInUse(user.getEmail())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User with this email aleady exist");
+        }
+        CreateUserResponse savedUser = userService.createUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
 
