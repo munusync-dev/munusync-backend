@@ -2,12 +2,14 @@ package com.munusync.backend.service;
 
 import com.munusync.backend.dto.request.LoginRequest;
 import com.munusync.backend.dto.request.SignupRequest;
+import com.munusync.backend.dto.request.TokenRefreshRequest;
 import com.munusync.backend.dto.response.AuthResponse;
 import com.munusync.backend.entity.Profile;
 import com.munusync.backend.entity.User;
 import com.munusync.backend.security.JWTTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -39,14 +41,16 @@ public class AuthService {
                 new UsernamePasswordAuthenticationToken(
                         user.getEmail(),
                         null,
-                        List.of(new SimpleGrantedAuthority(user.getRole()))
+                        List.of(new SimpleGrantedAuthority(user.getRole().getName().name()
+))
                 )
         );
 
         return AuthResponse.builder()
                 .userId(user.getId())
                 .email(user.getEmail())
-                .role(user.getRole())
+                .role(user.getRole().getName().name()
+)
                 .firstName(profile.getFirstName())
                 .lastName(profile.getLastName())
                 .token(token)
@@ -65,18 +69,44 @@ public class AuthService {
                 new UsernamePasswordAuthenticationToken(
                         user.getEmail(),
                         null,
-                        List.of(new SimpleGrantedAuthority(user.getRole()))
+                        List.of(new SimpleGrantedAuthority(user.getRole().getName().name()
+))
                 )
         );
 
         return AuthResponse.builder()
                 .userId(user.getId())
                 .email(user.getEmail())
-                .role(user.getRole())
+                .role(user.getRole().getName().name()
+)
                 .firstName(user.getProfile().getFirstName())
                 .lastName(user.getProfile().getLastName())
                 .token(token)
                 .message("Login successful")
                 .build();
     }
+
+    public AuthResponse refreshToken(TokenRefreshRequest request) {
+        String refreshToken = request.getRefreshToken();
+
+        if (!jwtTokenProvider.validateToken(refreshToken)) {
+            throw new RuntimeException("Invalid refresh token");
+        }
+
+        Authentication auth = jwtTokenProvider.getAuthentication(refreshToken);
+        String newAccessToken = jwtTokenProvider.createToken(auth);
+
+        User user = userService.findByEmail(auth.getName());
+
+        return AuthResponse.builder()
+                .userId(user.getId())
+                .email(user.getEmail())
+                .role(user.getRole().getName().name())
+                .firstName(user.getProfile().getFirstName())
+                .lastName(user.getProfile().getLastName())
+                .token(newAccessToken)
+                .message("Access token refreshed successfully")
+                .build();
+    }
+
 }

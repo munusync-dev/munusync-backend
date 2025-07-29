@@ -21,12 +21,10 @@ public class User {
     private Long id;
 
     @Column(nullable = false,unique = true)
-    private String email; ;
-    @Column(nullable = false)
-    private String password;
+    private String email;
 
     @Column(nullable = false)
-    private String role;
+    private String password;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Profile profile;
@@ -41,8 +39,6 @@ public class User {
 
 
     private String username;
-
-    private String password;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
