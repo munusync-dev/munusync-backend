@@ -1,5 +1,6 @@
 package com.munusync.backend.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -15,33 +16,41 @@ import lombok.Setter;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@Entity
+import com.munusync.backend.entity.enums.Role;
+
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users")
+@Entity
+@Table(name = "app_users")
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue
-    private long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
-    private String firstname;
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
 
-    private String lastname;
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
 
+    @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Role role;
 
     @Override
@@ -49,11 +58,9 @@ public class User implements UserDetails {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
-
     @Override
     public String getUsername() {
         return email;
     }
-
 
 }

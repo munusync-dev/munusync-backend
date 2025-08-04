@@ -1,5 +1,7 @@
 package com.munusync.backend.dto.response.user;
 
+import java.util.UUID;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -7,11 +9,11 @@ import lombok.Data;
 @Builder
 public class UserResponse {
     
-    private long id;
+    private UUID id;
 
-    private String firstname;
+    private String firstName;
     
-    private String lastname;
+    private String lastName;
     
     private String email;
 }

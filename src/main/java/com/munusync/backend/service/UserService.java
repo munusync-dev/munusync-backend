@@ -1,20 +1,19 @@
 package com.munusync.backend.service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.munusync.backend.Repository.UserRepository;
 import com.munusync.backend.dto.request.user.CreateUserRequest;
 import com.munusync.backend.dto.request.user.UpdateUserRequest;
 import com.munusync.backend.dto.response.user.UserResponse;
 import com.munusync.backend.entity.User;
 import com.munusync.backend.mapper.UserMapper;
+import com.munusync.backend.repository.UserRepository;
 
 @Service
 public class UserService {
@@ -29,7 +28,7 @@ public class UserService {
         return userRepository.findAll(pageable).map(UserMapper::toUserResponseDto);
     }
 
-    public Optional<UserResponse> getUserById(Long id) {
+    public Optional<UserResponse> getUserById(UUID id) {
         return userRepository.findById(id).map(UserMapper::toUserResponseDto);
     }
     
@@ -40,7 +39,7 @@ public class UserService {
         return UserMapper.toUserResponseDto(savedUser);
     }
 
-    public Optional<UserResponse> updateUser(Long id, UpdateUserRequest request) {
+    public Optional<UserResponse> updateUser(UUID id, UpdateUserRequest request) {
         return userRepository.findById(id).map(existingUser -> {
             UserMapper.updateUserFromDto(existingUser, request);
             User updateUser = userRepository.save(existingUser);
@@ -48,7 +47,7 @@ public class UserService {
         });
     }
 
-    public void deleteUser(Long id) {
+    public void deleteUser(UUID id) {
         if (!userRepository.existsById(id)) {
             throw new IllegalStateException("User with id " + id + " does not exist.");
         }

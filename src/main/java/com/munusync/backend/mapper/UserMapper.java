@@ -10,23 +10,23 @@ public class UserMapper {
     public static UserResponse toUserResponseDto(User user) {
         return UserResponse.builder()
                 .id(user.getId())
-                .firstname(user.getFirstname())
-                .lastname(user.getLastname())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
                 .email(user.getEmail())
                 .build();
     }
 
     public static User toUser(CreateUserRequest request) {
         return User.builder()
-                .firstname(request.getFirstname())
-                .lastname(request.getLastname())
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
                 .email(request.getEmail())
                 .build();
     }
 
     public static void updateUserFromDto(User user, UpdateUserRequest request) {
-        user.setFirstname(request.getFirstname());
-        user.setLastname(request.getLastname());
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
         user.setEmail(request.getEmail());
     }
 

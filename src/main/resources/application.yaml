@@ -7,7 +7,7 @@ spring:
     username: postgres
     password: "admin"
     driver-class-name: org.postgresql.Driver
-
+    
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -17,3 +17,8 @@ spring:
         format-sql: true
     database: postgresql 
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  data:
+    web:
+      pageable:
+        max-page-size: 200

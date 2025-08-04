@@ -1,6 +1,7 @@
 package com.munusync.backend.controller;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,17 +43,17 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
+    public ResponseEntity<UserResponse> getUserById(@PathVariable UUID id) {
         Optional<UserResponse> userById = userService.getUserById(id);
-        if(userById.isPresent()){
+        if (userById.isPresent()) {
             return ResponseEntity.ok(userById.get());
-        }else{
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserResponse> updateUser(@PathVariable Long id, @RequestBody UpdateUserRequest request) {
+    public ResponseEntity<UserResponse> updateUser(@PathVariable UUID id, @RequestBody UpdateUserRequest request) {
         Optional<UserResponse> updatedUser = userService.updateUser(id, request);
         if (updatedUser.isPresent()) {
             return ResponseEntity.ok(updatedUser.get());
@@ -62,13 +63,12 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
         // update to use exception class later
         try {
             userService.deleteUser(id);
             return ResponseEntity.noContent().build();
         } catch (IllegalStateException e) {
-            // Exception Not Printed
             return ResponseEntity.notFound().build();
         }
     }

@@ -1,11 +1,11 @@
 package com.munusync.backend.service;
 
-import com.munusync.backend.Repository.UserRepository;
 import com.munusync.backend.dto.request.auth.AuthenticationRequest;
 import com.munusync.backend.dto.request.auth.RegisterRequest;
 import com.munusync.backend.dto.response.AuthenticationResponse;
-import com.munusync.backend.entity.Role;
 import com.munusync.backend.entity.User;
+import com.munusync.backend.entity.enums.Role;
+import com.munusync.backend.repository.UserRepository;
 import com.munusync.backend.security.jwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,8 +27,8 @@ public class AuthenticationService {
             throw new IllegalStateException("Email address is already taken.");
         }
         User user = User.builder()
-                .firstname(request.getFirstname())
-                .lastname(request.getLastname())
+                .firstName(request.getFirstname())
+                .lastName(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)

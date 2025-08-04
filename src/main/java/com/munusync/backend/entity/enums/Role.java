@@ -1,4 +1,4 @@
-package com.munusync.backend.entity;
+package com.munusync.backend.entity.enums;
 
 public enum Role {
     ADMIN,

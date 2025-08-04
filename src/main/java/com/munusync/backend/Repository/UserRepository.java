@@ -1,12 +1,15 @@
-package com.munusync.backend.Repository;
+package com.munusync.backend.repository;
 
 import com.munusync.backend.entity.User;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+@Repository
+public interface UserRepository extends JpaRepository<User, UUID> {
 
     Optional<User> findByEmail(String email);
 
